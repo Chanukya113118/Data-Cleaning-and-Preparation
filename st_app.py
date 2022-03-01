@@ -63,6 +63,7 @@ try:
         except:
             try:
                 data=pd.read_excel(file)
+                st.write('if excel not working please do upload csv file (its due to internal error)')
                 clean_prepare(data)
             except:
                 st.write('')
