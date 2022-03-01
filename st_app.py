@@ -3,15 +3,7 @@ import pandas as pd
 data=pd.DataFrame()
 st.title('Data Cleaning and Preparation')
 file=st.file_uploader('Upload your Data')
-try:
-    if file is not None:
-        try:
-            data=pd.read_csv(file)
-        except:
-            try:
-                data=pd.read_excel(file)
-            except:
-                st.write('')
+def clean_prepare(data):
         st.write(data)
         st.header('Data with basic stats')
         st.write(data.describe())
@@ -59,9 +51,20 @@ try:
                         data[i].fillna(method='bfill',inplace=True)
                     st.header('Missing values count in each column')
                     st.write(data.isnull().sum())
-            elif miss_con=='No':
-                st.write('Please do fill it for further analysis, if not you may end up with wrong decision')
+                elif miss_con=='No':
+                    st.write('Please do fill it for further analysis, if not you may end up with wrong decision')
         else:
             st.write('Good to go for further Analysis')
+try:
+    if file is not None:
+        try:
+            data=pd.read_csv(file)
+            clean_prepare(data)
+        except:
+            try:
+                data=pd.read_excel(file)
+                clean_prepare(data)
+            except:
+                st.write('')
 except:
-    st.warning('Upload only CSV file types')
+    st.warning('Upload only CSV or Excel file types')
